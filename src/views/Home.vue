@@ -44,8 +44,13 @@ export default {
   data: function() {
     return {
       sala: "",
-      nick: ""
+      nick: localStorage.nick || ""
     };
+  },
+  watch: {
+    nick(v) {
+      localStorage.nick = v;
+    }
   },
   created() {
     this.socket.on("room", () => {
