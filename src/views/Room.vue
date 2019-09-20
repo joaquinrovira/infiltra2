@@ -62,8 +62,8 @@
           </v-expansion-panel>
         </v-expansion-panels>
       </div>
-      <v-container align-baseline v-show="html">
-        <v-card style="width: inherit;" min-height="150">
+      <v-container align-baseline v-show="html || (awaiting_word && !countdown)">
+        <v-card v-if="!awaiting_word" style="width: inherit;" min-height="150">
           <v-card-text>
             <p class="display-1 text--primary" v-html="title"></p>
             <div class="text--primary" v-html="html"></div>
@@ -71,6 +71,16 @@
           <v-card-actions>
             <v-btn v-if="link_id" text @click="route">Ver en la RAE</v-btn>
           </v-card-actions>
+        </v-card>
+
+        <v-card v-if="awaiting_word" style="width: inherit;" min-height="150">
+          <v-card-text>
+            <p class="display-1 text--primary">&nbsp;</p>
+            <div class="text--primary" style="text-align: center;">
+              <v-progress-circular indeterminate color="primary"></v-progress-circular>
+            </div>
+          </v-card-text>
+          <v-card-actions></v-card-actions>
         </v-card>
       </v-container>
     </div>
@@ -89,14 +99,25 @@ export default {
     return {
       random: Math.random() * 1000,
       panel: 0,
-      countdown: 0
+      countdown: 0,
+      awaiting_word: false
     };
   },
   created() {
     if (!this.$store.state.waiting_for_room) this.$router.replace("/");
     this.socket.on("countdown", n => {
       this.countdown = n;
-      if (n) this.$store.commit("resetWord");
+      if (n) {
+        this.$store.commit("resetWord");
+        this.awaiting_word = true;
+      }
+    });
+    this.socket.on("stop_countdown", () => {
+      this.countdown = 0;
+      this.awaiting_word = false;
+    });
+    this.socket.on("word", () => {
+      this.awaiting_word = false;
     });
   },
   computed: {
