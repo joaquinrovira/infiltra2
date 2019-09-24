@@ -3,9 +3,7 @@
     <v-app-bar app clipped-left>
       <v-icon
         @click.stop="() => {
-            if($router.history.current.name === 'room') 
-            $store.dispatch('leaveRoom');
-            $router.replace('/')
+            if($router.history.current.name !== 'home') $router.replace('/')
         }"
       >{{(this.$router.history.current.name !== "home") ? 'mdi-arrow-left': 'mdi-home-variant-outline'}}</v-icon>
       <v-spacer></v-spacer>
@@ -38,9 +36,6 @@ export default {
   data: () => ({
     drawer: null
   }),
-  created() {
-    this.$vuetify.theme.dark = true;
-  },
   computed: {
     connected() {
       return this.$store.getters.connected;

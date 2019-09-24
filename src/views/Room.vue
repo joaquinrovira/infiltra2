@@ -1,26 +1,4 @@
 <template>
-  <!-- <v-container fluid fill-height>
-    <v-row align-content-center justify-center>
-      <v-column>
-        {{navigator.platform}}
-        <v-text-field name="name" label="label"></v-text-field>
-      </v-column>
-    </v-row>
-  </v-container>-->
-
-  <!-- <v-container fluid grid-list-sm>
-      <v-layout wrap>
-        <v-flex v-for="i in 6" :key="i" xs4>
-          <img
-            :src="`https://randomuser.me/api/portraits/men/${i}.jpg`"
-            class="image"
-            alt="lorem"
-            width="100%"
-            height="100%"
-          />
-        </v-flex>
-      </v-layout>
-  </v-container>-->
   <v-container fluid fill-height pa-2 align-baseline>
     <div
       class="d-flex flex-column"
@@ -29,7 +7,6 @@
       <div class="d-flex flex-column" style="width: 100%;">
         <v-btn
           height="4em"
-          tabindex="-1"
           :color="(id && room[id]) && room[id].ready ? 'red' : 'success'"
           @click="toggleReady"
         >{{(id && room[id]) && room[id].ready ? 'No listo' : 'Listo'}}</v-btn>

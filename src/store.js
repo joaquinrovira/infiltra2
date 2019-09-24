@@ -3,9 +3,14 @@ import Vuex from "vuex";
 import io from "socket.io-client";
 
 Vue.use(Vuex);
-// const socket = io("http://localhost:8007");
-// const socket = io("http://192.168.0.155:8007");
-const socket = io("https://blooming-headland-96211.herokuapp.com/");
+
+let dev = process.env.NODE_ENV === "development";
+let url = dev
+  ? "http://localhost:8007"
+  : "https://blooming-headland-96211.herokuapp.com/";
+
+console.log(url);
+const socket = io(url);
 const store = new Vuex.Store({
   state: {
     socket: socket,
