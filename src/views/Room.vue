@@ -21,7 +21,16 @@
                     <v-card outlined :raised="i === id">
                       <v-list-item three-line>
                         <v-list-item-content>
-                          <div class="overline mb-0">{{room[i].ready ? '✅ Listo' : '❌ No listo'}}</div>
+                          <div class="overline mb-0">
+                            <v-avatar
+                              style="margin-top: -2px"
+                              :color="room[i].ready ? 'green' : 'red'"
+                              size="12"
+                            >
+                              <span class="white--text headline"></span>
+                            </v-avatar>
+                            {{' ' + (room[i].ready ? '' : 'No ') + 'Listo'}}
+                          </div>
                           <v-list-item-title
                             class="headline mb-1"
                           >{{room[i].nick || (i + '').substring(0,4)}}</v-list-item-title>
